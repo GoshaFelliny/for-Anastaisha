@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    background-color: black; /* Фон для лучшего эффекта */
+    overflow: hidden; /* Скрыть прокрутку */
+}
+
+.main-grid { 
+    margin-top: 35px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 250px 250px 250px;
+    grid-template-rows: 275px 275px 275px;
+    gap: 25px;
+}
+
+.main-grid .items {
+    perspective: 1000px; /* Добавляем перспективу для 3D эффекта */
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d; /* Сохраняем 3D эффект */
+    transition: transform 0.6s; /* Плавный переход */
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    backface-visibility: hidden; /* Скрываем заднюю сторону при повороте */
+}
+
+.card-front {
+    background-color: blueviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-back {
+    background-color: lightblue; /* Цвет задней стороны */
+    transform: rotateY(180deg); /* Поворачиваем заднюю сторону */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card.hovered {
+    transform: rotateY(180deg); /* Поворачиваем карточку при наведении */
+}
+
+.click {
+    z-index: 9999;
+    top: 50px;
+    left: 50px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-image: url('klik_1.webp');
+    background-size: cover;
+    background-position: center;
+    transition: transform 1s, opacity 0.5s; /* Добавляем анимацию для opacity */
+}
+
+.fade-out {
+    opacity: 0; /* Прозрачность 0 для исчезновения */
+}
+
+.card-front img {
+    width: 70%;
+}
+
+.card-back img {
+    width: 70%;
+}
+
+.card-video {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+
+
+#inputContainer {
+    
+    position: absolute; /* Positioning the overlay */
+    width: 80%;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for element's own size */
+    z-index: 10; /* Ensure it appears above other elements */
+    background-color: white; /* Background color for the input container */
+    padding: 20px; /* Padding around the input */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+
+}
+
+input {
+    text-align: center;
+    font-size: 50px;
+    width: 100%; /* Занимает всю ширину контейнера */
+    height: 100%; /* Занимает всю высоту контейнера */
+    border: none; /* Убираем стандартную границу */
+    outline: none; /* Убираем обводку при фокусе */
+    padding: 0 10px; /* Отступы внутри инпута */
+    box-sizing: border-box; /* Учитываем отступы в ширине */
+}
+
+
+#message {
+    display: none; /* Скрыть сообщение по умолчанию */
+    position: fixed; /* Зафиксировать позицию */
+    top: 50%; /* Центрировать по вертикали */
+    left: 50%; /* Центрировать по горизонтали */
+    transform: translate(-50%, -50%); /* Сдвинуть на половину ширины и высоты */
+    font-size: 70px; /* Размер шрифта */
+    color: rgb(255, 255, 255); /* Цвет текста */
+    padding: 20px; /* Отступы */
+}
+
+
+.ghost {
+    position: absolute;
+    bottom: -50px; /* Start below the screen */
+    width: 80px; /* Width of the ghost */
+    height: 80px; /* Height of the ghost */
+    background-image: url('ghost.webp'); /* Image of the ghost */
+    background-size: cover; /* Cover the entire div */
+    opacity: 0; /* Start invisible */
+    animation: fly 3s forwards; /* Animation */
+}
+
+@keyframes fly {
+    0% {
+        transform: translateY(0);
+        opacity: 0; /* Invisible at the start */
+    }
+    50% {
+        opacity: 1; /* Fully visible halfway */
+    }
+    100% {
+        transform: translateY(-100vh); /* Move to the top */
+        opacity: 0; /* Fade out at the top */
+    }
+}

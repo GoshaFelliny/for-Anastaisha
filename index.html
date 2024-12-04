@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    
+</head>
+<body>
+    <div class="main-grid">
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="reshotka.webp" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="emoji-fear.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="door.webp" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="zombie.webp" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <video class="card-video" src="videoplayback.mp4"  loop></video>
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="search.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="key.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="map.webp" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="items">
+            <div class="card">
+                <div class="card-front">
+                    <img src="emoji_star.webp" alt="" class="emoji-star">
+                </div>
+                <div class="card-back">
+                    <img src="emoji-thinks.webp" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="inputContainer" style="display: none;">
+        <input type="text" id="keyword" placeholder="Введи место куда мы пойдем, одно слово">
+    </div>
+
+    <div id="message">Ты угадала!</div>
+    
+
+    <div class="click" id="clickElement"></div>
+    <div id="ghostContainer"></div>
+    
+
+</body>
+
+<script>
+    
+
+    const clickElement = document.getElementById('clickElement');
+    const inputContainer = document.getElementById('inputContainer');
+    const cards = document.querySelectorAll('.card');
+    const inputWord = document.getElementById('keyword');
+    const message = document.getElementById('message');
+    
+    
+    const cardStates = Array(cards.length).fill(false);
+
+   
+    function resetPosition() {
+        clickElement.style.transform = 'translate(900px, 300px)'; 
+        setTimeout(() => {
+            clickElement.classList.add('fade-out');
+        }, 4000); 
+    }
+
+
+    window.onload = resetPosition;
+
+    cards.forEach((card, index) => {
+        const video = card.querySelector('.card-video'); 
+        
+        card.addEventListener('click', () => {
+            card.classList.toggle('hovered'); 
+
+        
+            cardStates[index] = true;
+
+            if (video) {
+                if (card.classList.contains('hovered')) {
+                    video.play(); 
+                } else {
+                    video.pause(); 
+                    video.currentTime = 0; 
+                }
+            }
+
+
+            if (cardStates.every(state => state)) {
+                inputContainer.style.display = 'flex'; 
+            }
+        });
+    });
+
+    inputWord.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') { 
+            if (inputWord.value.toLowerCase() === 'квест') { 
+                inputContainer.style.transform = 'translate(-50%, 100vh)'; // Move the input container down
+                inputWord.style.display = 'none'
+                alert("Ты догадалась!")
+                createGhosts(12); // 
+            }
+            else{
+                inputWord.placeholder = "Неа..."
+            }
+        }
+    });
+
+    const ghostContainer = document.getElementById('ghostContainer');
+
+    function createGhosts(count) {
+            for (let i = 0; i < count; i++) {
+                const ghost = document.createElement('div');
+                ghost.classList.add('ghost');
+                ghost.style.left = Math.random() * 100 + 'vw'; 
+
+                // Set a random duration for the animation
+                const duration = Math.random() * 2 + 2; 
+                ghost.style.animation = `fly ${duration}s forwards`; 
+
+                ghostContainer.appendChild(ghost);
+
+                ghost.addEventListener('animationend', () => {
+                    ghost.remove();
+                    createGhosts(1);
+                });
+            }
+        }
+
+
+
+
+
+
+
+</script>
+
+</html>
